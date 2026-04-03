@@ -29,6 +29,8 @@ int main() {
     ClearBackground(WHITE);
     BeginMode2D(camera);
 
+    // TODO: Create animated game title
+
     for (size_t i = 0; i < MAX_NODES; i++) {
       DrawCircleV(nodes[i].position, CIRCLE_RADIUS + 2, BLACK);
       DrawCircleV(nodes[i].position, CIRCLE_RADIUS, WHITE);
