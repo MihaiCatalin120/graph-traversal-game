@@ -8,6 +8,7 @@ typedef struct Player {
   Vector2 position;
 } Player;
 
-void UpdatePlayer(Player *player, Node *currentNode, Camera2D *camera);
+void UpdatePlayer(Player *player, Node *currentNode, Camera2D *camera,
+                  float delta);
 
 #endif

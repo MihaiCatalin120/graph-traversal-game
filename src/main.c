@@ -1,5 +1,6 @@
 #include "raylib.h"
 
+#include "camera.h"
 #include "config.h"
 #include "node.h"
 #include "player.h"
@@ -15,16 +16,14 @@ int main() {
   player.position = (Vector2){WINDOW_WIDTH / 2.0f, WINDOW_HEIGHT / 2.0f};
 
   Camera2D camera = {0};
-  camera.target = player.position;
-  camera.offset = (Vector2){WINDOW_WIDTH / 2.0f, WINDOW_HEIGHT / 2.0f};
-  camera.rotation = 0.0f;
-  camera.zoom = 1.0f;
+  InitCamera(&camera, player.position);
 
   Node currentNode = nodes[0];
 
   SetTargetFPS(60);
   while (!WindowShouldClose()) {
-    UpdatePlayer(&player, &currentNode, &camera);
+    float delta = GetFrameTime();
+    UpdatePlayer(&player, &currentNode, &camera, delta);
     BeginDrawing();
 
     ClearBackground(WHITE);

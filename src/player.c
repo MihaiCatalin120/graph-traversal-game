@@ -1,8 +1,10 @@
 #include "player.h"
+#include "camera.h"
 #include "node.h"
 #include "raylib.h"
 
-void UpdatePlayer(Player *player, Node *currentNode, Camera2D *camera) {
+void UpdatePlayer(Player *player, Node *currentNode, Camera2D *camera,
+                  float delta) {
   int stepIndex = -1;
 
   if (IsKeyPressed(KEY_ZERO))
@@ -12,10 +14,10 @@ void UpdatePlayer(Player *player, Node *currentNode, Camera2D *camera) {
   if (IsKeyPressed(KEY_TWO))
     stepIndex = 2;
 
-  if (stepIndex < 0 || stepIndex >= currentNode->optionsLength)
-    return;
+  if (stepIndex >= 0 || stepIndex < currentNode->optionsLength) {
+    *currentNode = nodes[currentNode->options[stepIndex]];
+    player->position = currentNode->position;
+  }
 
-  *currentNode = nodes[currentNode->options[stepIndex]];
-  player->position = currentNode->position;
-  camera->target = player->position;
+  UpdateCameraPosition(camera, player->position, delta);
 }
