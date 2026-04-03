@@ -18,7 +18,7 @@ int main() {
   Camera2D camera = {0};
   InitCamera(&camera, player.position);
 
-  Node currentNode = nodes[0];
+  Node currentNode = nodes[2];
 
   SetTargetFPS(60);
   while (!WindowShouldClose()) {

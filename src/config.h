@@ -11,6 +11,6 @@
 #define GAME_TITLE "graph-traversal"
 
 #define MAX_NEIGHBOURS 10
-#define MAX_NODES 3
+#define MAX_NODES 5
 
 #endif

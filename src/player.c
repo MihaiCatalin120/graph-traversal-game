@@ -14,7 +14,7 @@ void UpdatePlayer(Player *player, Node *currentNode, Camera2D *camera,
   if (IsKeyPressed(KEY_TWO))
     stepIndex = 2;
 
-  if (stepIndex >= 0 || stepIndex < currentNode->optionsLength) {
+  if (stepIndex >= 0 && stepIndex < currentNode->optionsLength) {
     *currentNode = nodes[currentNode->options[stepIndex]];
     // TODO: Add player animation
     player->position = currentNode->position;
