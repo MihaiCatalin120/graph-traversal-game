@@ -5,6 +5,7 @@
 #include "camera.h"
 #include "node.h"
 #include "player.h"
+#include "ui.h"
 #include "utils.h"
 
 #include "node.c"
@@ -12,4 +13,5 @@
 #include "camera.c"
 #include "main.c"
 #include "player.c"
+#include "ui.c"
 #include "utils.c"

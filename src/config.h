@@ -7,6 +7,7 @@
 #define DEBUG_MODE false
 
 #define CIRCLE_RADIUS 40
+#define CIRCLE_BORDER 2
 #define MOVE_HINT_SPACING 10
 
 #define GAME_TITLE "graph-traversal"
