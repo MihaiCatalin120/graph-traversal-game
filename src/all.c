@@ -5,9 +5,11 @@
 #include "camera.h"
 #include "node.h"
 #include "player.h"
+#include "utils.h"
 
 #include "node.c"
 
 #include "camera.c"
 #include "main.c"
 #include "player.c"
+#include "utils.c"

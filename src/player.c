@@ -3,8 +3,8 @@
 #include "node.h"
 #include "raylib.h"
 
-void UpdatePlayer(Player *player, Node *currentNode, Camera2D *camera,
-                  float delta) {
+void UpdatePlayer(Player *player, Node *currentNode, int *currentNodeIndex,
+                  Camera2D *camera, float delta) {
   int stepIndex = -1;
 
   if (IsKeyPressed(KEY_ZERO))
@@ -15,7 +15,8 @@ void UpdatePlayer(Player *player, Node *currentNode, Camera2D *camera,
     stepIndex = 2;
 
   if (stepIndex >= 0 && stepIndex < currentNode->optionsLength) {
-    *currentNode = nodes[currentNode->options[stepIndex]];
+    ChangeNode(currentNode->options[stepIndex], currentNodeIndex, currentNode);
+
     // TODO: Add player animation
     player->position = currentNode->position;
   }

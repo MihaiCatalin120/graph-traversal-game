@@ -4,6 +4,7 @@
 #include "config.h"
 #include "node.h"
 #include "player.h"
+#include "utils.h"
 
 #include <stdio.h>
 
@@ -18,12 +19,13 @@ int main() {
   Camera2D camera = {0};
   InitCamera(&camera, player.position);
 
-  Node currentNode = nodes[2];
+  int currentNodeIndex = 2;
+  Node currentNode = nodes[currentNodeIndex];
 
   SetTargetFPS(60);
   while (!WindowShouldClose()) {
     float delta = GetFrameTime();
-    UpdatePlayer(&player, &currentNode, &camera, delta);
+    UpdatePlayer(&player, &currentNode, &currentNodeIndex, &camera, delta);
     BeginDrawing();
 
     ClearBackground(WHITE);
@@ -34,6 +36,15 @@ int main() {
     for (size_t i = 0; i < MAX_NODES; i++) {
       DrawCircleV(nodes[i].position, CIRCLE_RADIUS + 2, BLACK);
       DrawCircleV(nodes[i].position, CIRCLE_RADIUS, WHITE);
+
+      int optionIndex =
+          GetElementIndex(i, currentNode.options, currentNode.optionsLength);
+      if (optionIndex >= 0) {
+        DrawText(TextFormat("[%d]", optionIndex),
+                 nodes[i].position.x - CIRCLE_RADIUS - MOVE_HINT_SPACING,
+                 nodes[i].position.y - CIRCLE_RADIUS - MOVE_HINT_SPACING, 16,
+                 BLACK);
+      }
     }
 
     DrawCircleV(player.position, CIRCLE_RADIUS / 2.0f, BLUE);

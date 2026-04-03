@@ -17,3 +17,8 @@ struct Node nodes[MAX_NODES] = {
      {3},
      1},
 };
+
+void ChangeNode(int targetIndex, int *currentIndex, Node *currentNode) {
+  *currentIndex = targetIndex;
+  *currentNode = nodes[targetIndex];
+}
