@@ -24,6 +24,8 @@ int main() {
   Camera2D camera = {0};
   InitCamera(&camera, player.position);
 
+  LoadNodes(nodes);
+
   int currentNodeIndex = 2;
   Node currentNode = nodes[currentNodeIndex];
 

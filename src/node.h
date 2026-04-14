@@ -11,7 +11,8 @@ typedef struct Node {
   size_t optionsLength;
 } Node;
 
+void LoadNodes(Node *nodes);
 void ChangeNode(int targetIndex, int *currentIndex, Node *currentNode);
 
-extern struct Node nodes[MAX_NODES];
+extern Node nodes[MAX_NODES];
 #endif
