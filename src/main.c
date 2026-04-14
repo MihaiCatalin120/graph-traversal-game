@@ -2,6 +2,7 @@
 
 #include "camera.h"
 #include "config.h"
+#include "font.h"
 #include "node.h"
 #include "player.h"
 #include "ui.h"
@@ -15,8 +16,10 @@ int main() {
   const char *appPath = GetApplicationDirectory();
 
   Image mainLogo =
-      LoadImage(TextFormat("%s%s", appPath, "assets/icons/logo.png"));
+      LoadImage(TextFormat("%s%s", appPath, "../assets/icons/gtg-logo.png"));
   SetWindowIcon(mainLogo);
+
+  InitFont(appPath);
 
   Player player = {0};
   InitPlayer(&player);
@@ -43,7 +46,8 @@ int main() {
     for (size_t i = 0; i < nodesLength; i++) {
       DrawNode(nodes[i].position);
       DrawDirectionArrows(nodes[i]);
-      DrawNodeHint(i, currentNode);
+      if (!player.isMoving)
+        DrawNodeHint(i, currentNode);
     }
 
     DrawCircleV(player.position,
@@ -60,6 +64,7 @@ int main() {
 
   CloseAudioDevice();
   UnloadImage(mainLogo);
+  UnloadFont(font);
   CloseWindow();
   return 0;
 }

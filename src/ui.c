@@ -1,4 +1,5 @@
 #include "ui.h"
+#include "font.h"
 #include "utils.h"
 
 void DrawNode(Vector2 position) {
@@ -14,9 +15,11 @@ void DrawNodeHint(int nodeIndex, struct Node currentNode) {
   int optionIndex = GetElementIndex(nodeIndex, currentNode.options,
                                     currentNode.optionsLength);
   if (optionIndex >= 0) {
-    DrawText(TextFormat("%d", optionIndex),
-             nodes[nodeIndex].position.x - CIRCLE_RADIUS - MOVE_HINT_SPACING,
-             nodes[nodeIndex].position.y - CIRCLE_RADIUS - MOVE_HINT_SPACING,
-             16, BLACK);
+    DrawTextEx(
+        font, TextFormat("%d", optionIndex),
+        (Vector2){
+            nodes[nodeIndex].position.x - CIRCLE_RADIUS - MOVE_HINT_SPACING,
+            nodes[nodeIndex].position.y - CIRCLE_RADIUS - MOVE_HINT_SPACING},
+        32, 0, BLACK);
   }
 }
