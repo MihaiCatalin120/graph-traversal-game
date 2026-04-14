@@ -14,6 +14,7 @@ typedef struct Node {
 
 void LoadNodes(Node *nodes);
 void ChangeNode(int targetIndex, int *currentIndex, Node *currentNode);
+void CheckCurrentNodeAction(Node *currentNode, bool *shouldExit);
 
 extern Node nodes[MAX_NODES];
 extern size_t nodesLength;

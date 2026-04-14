@@ -32,10 +32,13 @@ int main() {
   int currentNodeIndex = 2;
   Node currentNode = nodes[currentNodeIndex];
 
+  bool shouldExit = false;
+
   SetTargetFPS(60);
-  while (!WindowShouldClose()) {
+  while (!WindowShouldClose() && !shouldExit) {
     float delta = GetFrameTime();
     UpdatePlayer(&player, &currentNode, &currentNodeIndex, &camera, delta);
+    CheckCurrentNodeAction(&currentNode, &shouldExit);
     BeginDrawing();
 
     ClearBackground(WHITE);

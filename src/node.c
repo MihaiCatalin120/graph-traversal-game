@@ -1,7 +1,9 @@
 #include "node.h"
 #include "config.h"
+#include "raylib.h"
 
 #include <math.h>
+#include <string.h>
 
 // TODO: Add first level at least
 Node nodes[MAX_NODES];
@@ -65,4 +67,10 @@ void LoadNodes(Node *nodes) {
 void ChangeNode(int targetIndex, int *currentIndex, Node *currentNode) {
   *currentIndex = targetIndex;
   *currentNode = nodes[targetIndex];
+}
+
+void CheckCurrentNodeAction(Node *currentNode, bool *shouldExit) {
+  if (strcmp(currentNode->innerText, "Exit") == 0) {
+    *shouldExit = true;
+  }
 }
