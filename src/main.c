@@ -14,6 +14,10 @@ int main() {
   InitAudioDevice();
   const char *appPath = GetApplicationDirectory();
 
+  Image mainLogo =
+      LoadImage(TextFormat("%s%s", appPath, "assets/icons/logo.png"));
+  SetWindowIcon(mainLogo);
+
   Player player = {0};
   InitPlayer(&player);
 
@@ -51,5 +55,9 @@ int main() {
 
     EndDrawing();
   }
+
+  CloseAudioDevice();
+  UnloadImage(mainLogo);
+  CloseWindow();
   return 0;
 }
