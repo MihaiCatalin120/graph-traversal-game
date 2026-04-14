@@ -6,6 +6,7 @@
 #include "player.h"
 #include "ui.h"
 
+#include <math.h>
 #include <stdio.h>
 
 int main() {
@@ -14,7 +15,7 @@ int main() {
   const char *appPath = GetApplicationDirectory();
 
   Player player = {0};
-  player.position = (Vector2){WINDOW_WIDTH / 2.0f, WINDOW_HEIGHT / 2.0f};
+  InitPlayer(&player);
 
   Camera2D camera = {0};
   InitCamera(&camera, player.position);
@@ -35,10 +36,16 @@ int main() {
 
     for (size_t i = 0; i < MAX_NODES; i++) {
       DrawNode(nodes[i].position);
+      DrawDirectionArrows(nodes[i]);
       DrawNodeHint(i, currentNode);
     }
 
-    DrawCircleV(player.position, CIRCLE_RADIUS / 2.0f, BLUE);
+    DrawCircleV(player.position,
+                PLAYER_RADIUS * powf((2.0f * player.moveAnimationTimer -
+                                      PLAYER_MOVE_ANIMATION_DURATION) /
+                                         PLAYER_MOVE_ANIMATION_DURATION,
+                                     2),
+                BLUE);
 
     EndMode2D();
 
