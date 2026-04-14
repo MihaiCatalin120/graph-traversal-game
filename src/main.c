@@ -44,7 +44,7 @@ int main() {
     // TODO: Create animated game title
 
     for (size_t i = 0; i < nodesLength; i++) {
-      DrawNode(nodes[i].position);
+      DrawNode(nodes[i], player);
       DrawDirectionArrows(nodes[i]);
       if (!player.isMoving)
         DrawNodeHint(i, currentNode);

@@ -1,10 +1,21 @@
 #include "ui.h"
 #include "font.h"
+#include "raylib.h"
+#include "raymath.h"
 #include "utils.h"
 
-void DrawNode(Vector2 position) {
-  DrawCircleV(position, CIRCLE_RADIUS + CIRCLE_BORDER, BLACK);
-  DrawCircleV(position, CIRCLE_RADIUS, WHITE);
+void DrawNode(Node node, Player player) {
+  DrawCircleV(node.position, CIRCLE_RADIUS + CIRCLE_BORDER, BLACK);
+  DrawCircleV(node.position, CIRCLE_RADIUS, WHITE);
+  int fontSize = 32;
+  Vector2 fontSpace = MeasureTextEx(font, node.innerText, fontSize, 0);
+
+  if (!Vector2Equals(node.position, player.position)) {
+    DrawTextEx(font, node.innerText,
+               (Vector2){node.position.x - fontSpace.x / 2.0f,
+                         node.position.y - fontSpace.y / 2.0f},
+               32, 0, BLACK);
+  }
 }
 
 void DrawDirectionArrows(struct Node node) {

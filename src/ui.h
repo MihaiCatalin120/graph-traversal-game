@@ -1,6 +1,6 @@
 #include "node.h"
-#include "raylib.h"
+#include "player.h"
 
-void DrawNode(Vector2 position);
+void DrawNode(Node node, Player player);
 void DrawDirectionArrows(struct Node node);
 void DrawNodeHint(int nodeIndex, struct Node currentNode);

@@ -9,6 +9,7 @@ typedef struct Node {
   Vector2 position;
   int options[MAX_NEIGHBOURS];
   size_t optionsLength;
+  const char *innerText;
 } Node;
 
 void LoadNodes(Node *nodes);
