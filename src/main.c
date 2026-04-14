@@ -40,7 +40,7 @@ int main() {
 
     // TODO: Create animated game title
 
-    for (size_t i = 0; i < MAX_NODES; i++) {
+    for (size_t i = 0; i < nodesLength; i++) {
       DrawNode(nodes[i].position);
       DrawDirectionArrows(nodes[i]);
       DrawNodeHint(i, currentNode);

@@ -14,7 +14,7 @@
 #define GAME_TITLE "graph-traversal"
 
 #define MAX_NEIGHBOURS 10
-#define MAX_NODES 5
+#define MAX_NODES 100
 
 #define PLAYER_MOVE_ANIMATION_DURATION .5f
 

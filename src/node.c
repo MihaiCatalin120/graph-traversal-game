@@ -1,38 +1,59 @@
 #include "node.h"
 #include "config.h"
 
+#include <math.h>
+
 // TODO: Add first level at least
 Node nodes[MAX_NODES];
+size_t nodesLength = 0;
+
+void MoveCursorAndInsertNode(Node *cursor, Node *nodes, float xDiff,
+                             float yDiff, int options[], int optionsLength) {
+  cursor->position.x += xDiff;
+  cursor->position.y += yDiff;
+
+  for (size_t i = 0; i < optionsLength; i++) {
+    cursor->options[i] = options[i];
+  }
+  cursor->optionsLength = optionsLength;
+
+  nodes[nodesLength++] = *cursor;
+}
 
 void LoadNodes(Node *nodes) {
-  Node nodeCursor = {
+  Node mainMenuCursor = {
       {WINDOW_WIDTH / 2.0f - 8 * CIRCLE_RADIUS, WINDOW_HEIGHT / 2.0f}, {1}, 1};
 
-  nodes[0] = nodeCursor;
+  nodes[nodesLength++] = mainMenuCursor;
 
-  nodeCursor.position.x += 4 * CIRCLE_RADIUS;
-  nodeCursor.options[0] = 0;
-  nodeCursor.options[1] = 2;
-  nodeCursor.optionsLength = 2;
-  nodes[1] = nodeCursor;
+  MoveCursorAndInsertNode(&mainMenuCursor, nodes, 4 * CIRCLE_RADIUS, 0,
+                          (int[]){0, 2}, 2);
 
-  nodeCursor.position.x += 4 * CIRCLE_RADIUS;
-  nodeCursor.options[0] = 1;
-  nodeCursor.options[1] = 3;
-  nodeCursor.optionsLength = 2;
-  nodes[2] = nodeCursor;
+  MoveCursorAndInsertNode(&mainMenuCursor, nodes, 4 * CIRCLE_RADIUS, 0,
+                          (int[]){1, 3}, 2);
 
-  nodeCursor.position.x += 4 * CIRCLE_RADIUS;
-  nodeCursor.options[0] = 2;
-  nodeCursor.options[1] = 4;
-  nodeCursor.optionsLength = 2;
-  nodes[3] = nodeCursor;
+  float gameTitleSideLength = 1.2f;
+  Node gameTitleCursor = {
+      {mainMenuCursor.position.x - gameTitleSideLength * CIRCLE_RADIUS,
+       mainMenuCursor.position.y - 8 * CIRCLE_RADIUS},
+      {6},
+      1};
 
-  nodeCursor.position.x += 4 * CIRCLE_RADIUS;
-  nodeCursor.position.y += 3.0f / 2.0f * CIRCLE_RADIUS;
-  nodeCursor.options[0] = 3;
-  nodeCursor.optionsLength = 1;
-  nodes[4] = nodeCursor;
+  MoveCursorAndInsertNode(&mainMenuCursor, nodes, 4 * CIRCLE_RADIUS, 0,
+                          (int[]){2, 4}, 2);
+
+  MoveCursorAndInsertNode(&mainMenuCursor, nodes, 4 * CIRCLE_RADIUS,
+                          3.0f / 2.0f * CIRCLE_RADIUS, (int[]){3}, 1);
+
+  nodes[nodesLength++] = gameTitleCursor;
+
+  MoveCursorAndInsertNode(&gameTitleCursor, nodes,
+                          2 * gameTitleSideLength * CIRCLE_RADIUS, 0,
+                          (int[]){7}, 1);
+
+  MoveCursorAndInsertNode(
+      &gameTitleCursor, nodes, -gameTitleSideLength * CIRCLE_RADIUS,
+      gameTitleSideLength * sqrtf(3.0f) * CIRCLE_RADIUS, (int[]){5}, 1);
 }
 
 void ChangeNode(int targetIndex, int *currentIndex, Node *currentNode) {
