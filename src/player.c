@@ -4,6 +4,8 @@
 #include "node.h"
 #include "raylib.h"
 
+#include <math.h>
+
 void InitPlayer(Player *player) {
   player->position = (Vector2){WINDOW_WIDTH / 2.0f, WINDOW_HEIGHT / 2.0f};
   player->isMoving = false;
@@ -52,4 +54,15 @@ void UpdatePlayer(Player *player, Node *currentNode, int *currentNodeIndex,
 
   UpdatePlayerPosition(player, delta);
   UpdateCameraPosition(camera, player->position, delta);
+}
+
+void UpdateGameTitle(Player *player, Node *currentNode, int *currentNodeIndex,
+                     float delta, float *counter) {
+  if (*counter > 3.0f) {
+    *counter = fmod(*counter, 3.0f);
+    ChangeNode(currentNode->options[0], currentNodeIndex, currentNode);
+    StartPlayerMove(player, currentNode);
+  }
+
+  UpdatePlayerPosition(player, delta);
 }

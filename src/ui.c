@@ -4,13 +4,18 @@
 #include "raymath.h"
 #include "utils.h"
 
+#include <string.h>
+
 void DrawNode(Node node, Player player) {
   DrawCircleV(node.position, CIRCLE_RADIUS + CIRCLE_BORDER, BLACK);
   DrawCircleV(node.position, CIRCLE_RADIUS, WHITE);
   int fontSize = 32;
   Vector2 fontSpace = MeasureTextEx(font, node.innerText, fontSize, 0);
 
-  if (!Vector2Equals(node.position, player.position)) {
+  if (!Vector2Equals(node.position, player.position) &&
+      strcmp(node.innerText, "Graph") != 0 &&
+      strcmp(node.innerText, "Traversal") != 0 &&
+      strcmp(node.innerText, "Game") != 0) {
     DrawTextEx(font, node.innerText,
                (Vector2){node.position.x - fontSpace.x / 2.0f,
                          node.position.y - fontSpace.y / 2.0f},

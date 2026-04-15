@@ -14,6 +14,8 @@ typedef struct Player {
 void InitPlayer(Player *player);
 void StartPlayerMove(Player *player, Node *currentNode);
 void UpdatePlayerPosition(Player *player, float delta);
+void UpdateGameTitle(Player *player, Node *currentNode, int *currentNodeIndex,
+                     float delta, float *counter);
 void UpdatePlayer(Player *player, Node *currentNode, int *currentNodeIndex,
                   Camera2D *camera, float delta);
 
