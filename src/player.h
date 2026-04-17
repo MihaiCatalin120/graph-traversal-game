@@ -17,6 +17,6 @@ void UpdatePlayerPosition(Player *player, float delta);
 void UpdateGameTitle(Player *player, Node *currentNode, int *currentNodeIndex,
                      float delta, float *counter);
 void UpdatePlayer(Player *player, Node *currentNode, int *currentNodeIndex,
-                  Camera2D *camera, float delta);
+                  float delta);
 
 #endif

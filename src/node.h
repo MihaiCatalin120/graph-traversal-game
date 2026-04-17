@@ -13,6 +13,7 @@ typedef struct Node {
 } Node;
 
 void LoadNodes(Node *nodes);
+void LoadLevel(int level, Node *cursor, Node *nodes);
 void ChangeNode(int targetIndex, int *currentIndex, Node *currentNode);
 void CheckCurrentNodeAction(Node *currentNode, bool *shouldExit);
 

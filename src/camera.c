@@ -4,20 +4,38 @@
 
 void InitCamera(Camera2D *camera, Vector2 startPosition) {
   camera->target = startPosition;
-  camera->offset = (Vector2){WINDOW_WIDTH / 2.0f, WINDOW_HEIGHT / 2.0f};
+  camera->offset = (Vector2){WINDOW_WIDTH / 2.0f, WINDOW_HEIGHT / 1.3f};
   camera->rotation = 0.0f;
   camera->zoom = 1.0f;
 }
 
-void UpdateCameraPosition(Camera2D *camera, Vector2 targetPosition,
-                          float delta) {
+void UpdateCameraPosition(Camera2D *camera, Vector2 targetPosition, float delta,
+                          int currentNodeIndex) {
   static float minSpeed = 10;
   static float minEffectLength = 10;
   static float fractionSpeed = 2.5f;
 
-  camera->offset = (Vector2){WINDOW_WIDTH / 2.0f, WINDOW_HEIGHT / 1.3f};
-  Vector2 diff = Vector2Subtract(targetPosition, camera->target);
+  // Animate offset
+  Vector2 targetOffset;
+  targetOffset.x = WINDOW_WIDTH / 2.0f;
+  if (currentNodeIndex < 8) {
+    targetOffset.y = WINDOW_HEIGHT / 1.3f;
+  } else {
+    targetOffset.y = WINDOW_HEIGHT / 2.0f;
+  }
+
+  Vector2 diff = Vector2Subtract(targetOffset, camera->offset);
   float length = Vector2Length(diff);
+
+  if (length > minEffectLength) {
+    float speed = fmaxf(fractionSpeed * length, minSpeed);
+    camera->offset =
+        Vector2Add(camera->offset, Vector2Scale(diff, speed * delta / length));
+  }
+
+  // Animate target
+  diff = Vector2Subtract(targetPosition, camera->target);
+  length = Vector2Length(diff);
 
   if (length > minEffectLength) {
     float speed = fmaxf(fractionSpeed * length, minSpeed);

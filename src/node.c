@@ -15,10 +15,17 @@ void MoveCursorAndInsertNode(Node *cursor, Node *nodes, float xDiff,
   cursor->position.x += xDiff;
   cursor->position.y += yDiff;
 
-  for (size_t i = 0; i < optionsLength; i++) {
-    cursor->options[i] = options[i];
+  if (options[0] == -1) {
+    cursor->options[0] = nodesLength - 1;
+    cursor->options[1] = nodesLength + 1;
+    cursor->optionsLength = 2;
+  } else {
+    for (size_t i = 0; i < optionsLength; i++) {
+      cursor->options[i] = options[i];
+    }
+    cursor->optionsLength = optionsLength;
   }
-  cursor->optionsLength = optionsLength;
+
   cursor->innerText = innerText;
 
   nodes[nodesLength++] = *cursor;
@@ -34,10 +41,10 @@ void LoadNodes(Node *nodes) {
   nodes[nodesLength++] = mainMenuCursor;
 
   MoveCursorAndInsertNode(&mainMenuCursor, nodes, 4 * CIRCLE_RADIUS, 0,
-                          (int[]){0, 2}, 2, "Options");
+                          (int[]){-1}, 2, "Options");
 
   MoveCursorAndInsertNode(&mainMenuCursor, nodes, 4 * CIRCLE_RADIUS, 0,
-                          (int[]){1, 3}, 2, "");
+                          (int[]){-1}, 2, "");
 
   float gameTitleSideLength = 1.2f;
   Node gameTitleCursor = {
@@ -48,10 +55,10 @@ void LoadNodes(Node *nodes) {
       "Graph"};
 
   MoveCursorAndInsertNode(&mainMenuCursor, nodes, 4 * CIRCLE_RADIUS, 0,
-                          (int[]){2, 4}, 2, "");
+                          (int[]){-1}, 2, "");
 
   MoveCursorAndInsertNode(&mainMenuCursor, nodes, 4 * CIRCLE_RADIUS,
-                          3.0f / 2.0f * CIRCLE_RADIUS, (int[]){3}, 1, "");
+                          3.0f / 2.0f * CIRCLE_RADIUS, (int[]){3, 8}, 2, "");
 
   nodes[nodesLength++] = gameTitleCursor;
 
@@ -62,6 +69,22 @@ void LoadNodes(Node *nodes) {
   MoveCursorAndInsertNode(
       &gameTitleCursor, nodes, -gameTitleSideLength * CIRCLE_RADIUS,
       gameTitleSideLength * sqrtf(3.0f) * CIRCLE_RADIUS, (int[]){5}, 1, "Game");
+
+  Node levelCursor = mainMenuCursor;
+
+  LoadLevel(0, &levelCursor, nodes);
+}
+
+void LoadLevel(int level, Node *cursor, Node *nodes) {
+  if (level == 0) {
+    MoveCursorAndInsertNode(cursor, nodes, 4 * CIRCLE_RADIUS, 0, (int[]){4, 9},
+                            2, "");
+
+    for (size_t i = 0; i < 10; i++) {
+      MoveCursorAndInsertNode(cursor, nodes, 4 * CIRCLE_RADIUS, 0, (int[]){-1},
+                              2, "");
+    }
+  }
 }
 
 void ChangeNode(int targetIndex, int *currentIndex, Node *currentNode) {

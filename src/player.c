@@ -35,7 +35,7 @@ void StartPlayerMove(Player *player, Node *currentNode) {
 }
 
 void UpdatePlayer(Player *player, Node *currentNode, int *currentNodeIndex,
-                  Camera2D *camera, float delta) {
+                  float delta) {
   int stepIndex = -1;
 
   if (IsKeyPressed(KEY_ZERO))
@@ -53,7 +53,6 @@ void UpdatePlayer(Player *player, Node *currentNode, int *currentNodeIndex,
   }
 
   UpdatePlayerPosition(player, delta);
-  UpdateCameraPosition(camera, player->position, delta);
 }
 
 void UpdateGameTitle(Player *player, Node *currentNode, int *currentNodeIndex,

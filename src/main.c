@@ -47,10 +47,12 @@ int main() {
   while (!WindowShouldClose() && !shouldExit) {
     float delta = GetFrameTime();
     gameTitleCounter += delta;
-    UpdatePlayer(&player, &currentNode, &currentNodeIndex, &camera, delta);
+    UpdatePlayer(&player, &currentNode, &currentNodeIndex, delta);
+    UpdateCameraPosition(&camera, player.position, delta, currentNodeIndex);
     UpdateGameTitle(&gameTitlePlayer, &gameTitleCurrentNode,
                     &gameTitleCurrentNodeIndex, delta, &gameTitleCounter);
     CheckCurrentNodeAction(&currentNode, &shouldExit);
+
     BeginDrawing();
 
     ClearBackground(WHITE);
@@ -61,6 +63,8 @@ int main() {
       DrawDirectionArrows(nodes[i]);
       if (!player.isMoving)
         DrawNodeHint(i, currentNode);
+      if (DEBUG_MODE)
+        DrawNodeID(i, currentNode);
     }
 
     DrawCircleV(player.position,

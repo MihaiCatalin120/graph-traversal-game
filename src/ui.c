@@ -39,3 +39,11 @@ void DrawNodeHint(int nodeIndex, struct Node currentNode) {
         32, 0, BLACK);
   }
 }
+
+void DrawNodeID(int nodeIndex, struct Node currentNode) {
+  DrawTextEx(font, TextFormat("%d", nodeIndex),
+             (Vector2){nodes[nodeIndex].position.x,
+                       nodes[nodeIndex].position.y + CIRCLE_RADIUS +
+                           MOVE_HINT_SPACING},
+             32, 0, BLACK);
+}
