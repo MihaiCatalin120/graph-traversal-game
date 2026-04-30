@@ -45,7 +45,7 @@ void UpdatePlayer(Player *player, Node *currentNode, int *currentNodeIndex,
   if (IsKeyPressed(KEY_TWO))
     stepIndex = 2;
 
-  if (stepIndex >= 0 && stepIndex < currentNode->optionsLength &&
+  if (stepIndex >= 0 && stepIndex < (int)currentNode->optionsLength &&
       !player->isMoving) {
     ChangeNode(currentNode->options[stepIndex], currentNodeIndex, currentNode);
 

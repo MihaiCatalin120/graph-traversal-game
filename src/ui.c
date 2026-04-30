@@ -24,6 +24,7 @@ void DrawNode(Node node, Player player) {
 }
 
 void DrawDirectionArrows(struct Node node) {
+  // WARN: Until this is implemented it will throw a warning
   // TODO: Implement
 }
 
@@ -40,7 +41,7 @@ void DrawNodeHint(int nodeIndex, struct Node currentNode) {
   }
 }
 
-void DrawNodeID(int nodeIndex, struct Node currentNode) {
+void DrawNodeID(int nodeIndex) {
   DrawTextEx(font, TextFormat("%d", nodeIndex),
              (Vector2){nodes[nodeIndex].position.x,
                        nodes[nodeIndex].position.y + CIRCLE_RADIUS +

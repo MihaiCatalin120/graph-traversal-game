@@ -64,7 +64,7 @@ int main() {
       if (!player.isMoving)
         DrawNodeHint(i, currentNode);
       if (DEBUG_MODE)
-        DrawNodeID(i, currentNode);
+        DrawNodeID(i);
     }
 
     DrawCircleV(player.position,

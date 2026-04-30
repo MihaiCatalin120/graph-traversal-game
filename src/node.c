@@ -10,7 +10,7 @@ Node nodes[MAX_NODES];
 size_t nodesLength = 0;
 
 void MoveCursorAndInsertNode(Node *cursor, Node *nodes, float xDiff,
-                             float yDiff, int options[], int optionsLength,
+                             float yDiff, int options[], size_t optionsLength,
                              const char *innerText) {
   cursor->position.x += xDiff;
   cursor->position.y += yDiff;
