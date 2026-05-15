@@ -3,10 +3,10 @@
 #include "raylib.h"
 
 #include <math.h>
+#include <stdlib.h>
 #include <string.h>
 
-// TODO: Add first level at least
-Node nodes[MAX_NODES];
+Node *nodes;
 size_t nodesLength = 0;
 
 void MoveCursorAndInsertNode(Node *cursor, Node *nodes, float xDiff,
@@ -71,18 +71,27 @@ void LoadNodes(Node *nodes) {
       gameTitleSideLength * sqrtf(3.0f) * CIRCLE_RADIUS, (int[]){5}, 1, "Game");
 
   Node levelCursor = mainMenuCursor;
-
   LoadLevel(0, &levelCursor, nodes);
 }
 
 void LoadLevel(int level, Node *cursor, Node *nodes) {
   if (level == 0) {
-    MoveCursorAndInsertNode(cursor, nodes, 4 * CIRCLE_RADIUS, 0, (int[]){4, 9},
-                            2, "");
+    Node levelStartCursor = *cursor;
+    MoveCursorAndInsertNode(cursor, nodes, 4 * CIRCLE_RADIUS, 0,
+                            (int[]){4, 9, 19}, 3, "");
 
     for (size_t i = 0; i < 10; i++) {
       MoveCursorAndInsertNode(cursor, nodes, 4 * CIRCLE_RADIUS, 0, (int[]){-1},
                               2, "");
+    }
+
+    MoveCursorAndInsertNode(&levelStartCursor, nodes, 6 * CIRCLE_RADIUS,
+                            4 * CIRCLE_RADIUS, (int[]){8, nodesLength + 1}, 2,
+                            "");
+    for (size_t i = 0; i < 10; i++) {
+      MoveCursorAndInsertNode(&levelStartCursor, nodes, 4 * CIRCLE_RADIUS,
+                              fmax((4.0f - i), 0.0f) * CIRCLE_RADIUS,
+                              (int[]){-1}, 2, "");
     }
   }
 }

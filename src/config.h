@@ -4,7 +4,7 @@
 #define WINDOW_WIDTH 800
 #define WINDOW_HEIGHT 600
 
-#define DEBUG_MODE false
+#define DEBUG_MODE true
 
 #define CIRCLE_RADIUS 40
 #define CIRCLE_BORDER 2

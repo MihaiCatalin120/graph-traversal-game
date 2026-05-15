@@ -17,6 +17,6 @@ void LoadLevel(int level, Node *cursor, Node *nodes);
 void ChangeNode(int targetIndex, int *currentIndex, Node *currentNode);
 void CheckCurrentNodeAction(Node *currentNode, bool *shouldExit);
 
-extern Node nodes[MAX_NODES];
+extern Node *nodes;
 extern size_t nodesLength;
 #endif

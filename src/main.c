@@ -9,6 +9,7 @@
 
 #include <math.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 int main() {
@@ -31,6 +32,7 @@ int main() {
   Camera2D camera = {0};
   InitCamera(&camera, player.position);
 
+  nodes = calloc(MAX_NODES, sizeof(Node));
   LoadNodes(nodes);
 
   int currentNodeIndex = 2;
