@@ -1,4 +1,5 @@
 #include "ui.h"
+#include "config.h"
 #include "font.h"
 #include "raylib.h"
 #include "raymath.h"
@@ -47,4 +48,19 @@ void DrawNodeID(int nodeIndex) {
                        nodes[nodeIndex].position.y + CIRCLE_RADIUS +
                            MOVE_HINT_SPACING},
              32, 0, BLACK);
+}
+
+void DrawCurrentLevelTitle() {
+  Vector2 startNodePosition = nodes[3].position; // Last node in the main menu
+  const char *title = "Welcome";
+  switch (rini_get_value(config, "STARTING_LEVEL")) {
+  case 1:
+    title = "Fin";
+    break;
+  }
+
+  DrawTextEx(
+      font, title,
+      (Vector2){startNodePosition.x, startNodePosition.y - 6 * CIRCLE_RADIUS},
+      64, 0, BLACK);
 }

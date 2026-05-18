@@ -4,7 +4,8 @@
 
 void InitCamera(Camera2D *camera, Vector2 startPosition) {
   camera->target = startPosition;
-  camera->offset = (Vector2){WINDOW_WIDTH / 2.0f, WINDOW_HEIGHT / 1.3f};
+  camera->offset = (Vector2){rini_get_value(config, "WINDOW_WIDTH") / 2.0f,
+                             rini_get_value(config, "WINDOW_HEIGHT") / 1.3f};
   camera->rotation = 0.0f;
   camera->zoom = 1.0f;
 }
@@ -17,11 +18,11 @@ void UpdateCameraPosition(Camera2D *camera, Vector2 targetPosition, float delta,
 
   // Animate offset
   Vector2 targetOffset;
-  targetOffset.x = WINDOW_WIDTH / 2.0f;
+  targetOffset.x = rini_get_value(config, "WINDOW_WIDTH") / 2.0f;
   if (currentNodeIndex < 8) {
-    targetOffset.y = WINDOW_HEIGHT / 1.3f;
+    targetOffset.y = rini_get_value(config, "WINDOW_HEIGHT") / 1.3f;
   } else {
-    targetOffset.y = WINDOW_HEIGHT / 2.0f;
+    targetOffset.y = rini_get_value(config, "WINDOW_HEIGHT") / 2.0f;
   }
 
   Vector2 diff = Vector2Subtract(targetOffset, camera->offset);

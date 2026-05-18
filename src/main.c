@@ -7,13 +7,21 @@
 #include "player.h"
 #include "ui.h"
 
+#include <stdbool.h>
+
+#define RINI_IMPLEMENTATION
+#include "rini.h"
+
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 int main() {
-  InitWindow(WINDOW_WIDTH, WINDOW_HEIGHT, GAME_TITLE);
+  LoadConfig();
+  int width = rini_get_value(config, "WINDOW_WIDTH");
+  int height = rini_get_value(config, "WINDOW_HEIGHT");
+  InitWindow(width, height, GAME_TITLE);
   InitAudioDevice();
   const char *appPath = GetApplicationDirectory();
 
@@ -85,6 +93,7 @@ int main() {
                 BLACK);
 
     // TODO: Double for could be avoided
+    // Issue more likely due to special treatment of game title nodes
     for (size_t i = 0; i < nodesLength; i++) {
       int fontSize = 24;
       Vector2 fontSpace = MeasureTextEx(font, nodes[i].innerText, fontSize, 0);
@@ -99,6 +108,8 @@ int main() {
       }
     }
 
+    DrawCurrentLevelTitle();
+
     EndMode2D();
 
     EndDrawing();
@@ -107,6 +118,7 @@ int main() {
   CloseAudioDevice();
   UnloadImage(mainLogo);
   UnloadFont(font);
+  rini_unload(&config);
   CloseWindow();
   return 0;
 }

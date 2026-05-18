@@ -33,10 +33,12 @@ void MoveCursorAndInsertNode(Node *cursor, Node *nodes, float xDiff,
 
 void LoadNodes(Node *nodes) {
   Node mainMenuCursor = {
-      {WINDOW_WIDTH / 2.0f - 8 * CIRCLE_RADIUS, WINDOW_HEIGHT / 2.0f},
+      {rini_get_value(config, "WINDOW_WIDTH") / 2.0f - 8 * CIRCLE_RADIUS,
+       rini_get_value(config, "WINDOW_HEIGHT") / 2.0f},
       {1},
       1,
-      "Exit"};
+      "Exit",
+      false};
 
   nodes[nodesLength++] = mainMenuCursor;
 
@@ -52,13 +54,14 @@ void LoadNodes(Node *nodes) {
        mainMenuCursor.position.y - 8 * CIRCLE_RADIUS},
       {6},
       1,
-      "Graph"};
+      "Graph",
+      false};
 
   MoveCursorAndInsertNode(&mainMenuCursor, nodes, 4 * CIRCLE_RADIUS, 0,
                           (int[]){-1}, 2, "");
 
-  MoveCursorAndInsertNode(&mainMenuCursor, nodes, 4 * CIRCLE_RADIUS,
-                          3.0f / 2.0f * CIRCLE_RADIUS, (int[]){3, 8}, 2, "");
+  MoveCursorAndInsertNode(&mainMenuCursor, nodes, 4 * CIRCLE_RADIUS, 0,
+                          (int[]){3, 8}, 2, "");
 
   nodes[nodesLength++] = gameTitleCursor;
 
@@ -71,11 +74,13 @@ void LoadNodes(Node *nodes) {
       gameTitleSideLength * sqrtf(3.0f) * CIRCLE_RADIUS, (int[]){5}, 1, "Game");
 
   Node levelCursor = mainMenuCursor;
-  LoadLevel(0, &levelCursor, nodes);
+
+  LoadLevel(rini_get_value(config, "STARTING_LEVEL"), &levelCursor, nodes);
 }
 
 void LoadLevel(int level, Node *cursor, Node *nodes) {
-  if (level == 0) {
+  switch (level) {
+  case 0: {
     Node levelStartCursor = *cursor;
     MoveCursorAndInsertNode(cursor, nodes, 4 * CIRCLE_RADIUS, 0,
                             (int[]){4, 9, 19}, 3, "");
@@ -89,10 +94,17 @@ void LoadLevel(int level, Node *cursor, Node *nodes) {
                             4 * CIRCLE_RADIUS, (int[]){8, nodesLength + 1}, 2,
                             "");
     for (size_t i = 0; i < 10; i++) {
+      if (i == 9)
+        levelStartCursor.isGoal = true;
       MoveCursorAndInsertNode(&levelStartCursor, nodes, 4 * CIRCLE_RADIUS,
                               fmax((4.0f - i), 0.0f) * CIRCLE_RADIUS,
                               (int[]){-1}, 2, "");
     }
+  } break;
+  case 1: {
+    MoveCursorAndInsertNode(cursor, nodes, 4 * CIRCLE_RADIUS, 0, (int[]){4}, 1,
+                            "");
+  } break;
   }
 }
 
@@ -104,5 +116,14 @@ void ChangeNode(int targetIndex, int *currentIndex, Node *currentNode) {
 void CheckCurrentNodeAction(Node *currentNode, bool *shouldExit) {
   if (strcmp(currentNode->innerText, "Exit") == 0) {
     *shouldExit = true;
+  }
+
+  if (currentNode->isGoal) {
+    currentNode->isGoal = false;
+    rini_set_value(&config, "STARTING_LEVEL",
+                   rini_get_value(config, "STARTING_LEVEL") + 1,
+                   STARTING_LEVEL_DESCRIPTION);
+    rini_save(config, CONFIG_FILENAME);
+    printf("DEBUG: Progress saved!\n");
   }
 }

@@ -2,6 +2,8 @@
 #include <stddef.h>
 #include <unistd.h>
 
+#include "config.h"
+
 #include "camera.h"
 #include "font.h"
 #include "node.h"
@@ -12,6 +14,7 @@
 #include "node.c"
 
 #include "camera.c"
+#include "config.c"
 #include "font.c"
 #include "main.c"
 #include "player.c"

@@ -1,13 +1,13 @@
 #include "player.h"
 #include "camera.h"
-#include "config.h"
 #include "node.h"
 #include "raylib.h"
 
 #include <math.h>
 
 void InitPlayer(Player *player) {
-  player->position = (Vector2){WINDOW_WIDTH / 2.0f, WINDOW_HEIGHT / 2.0f};
+  player->position = (Vector2){rini_get_value(config, "WINDOW_WIDTH") / 2.0f,
+                               rini_get_value(config, "WINDOW_HEIGHT") / 2.0f};
   player->isMoving = false;
   player->moveAnimationTimer = 0.0f;
   player->nextPosition = NULL;
@@ -38,6 +38,7 @@ void UpdatePlayer(Player *player, Node *currentNode, int *currentNodeIndex,
                   float delta) {
   int stepIndex = -1;
 
+  // TODO: better key handling
   if (IsKeyPressed(KEY_ZERO))
     stepIndex = 0;
   if (IsKeyPressed(KEY_ONE))

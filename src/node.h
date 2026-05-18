@@ -10,6 +10,7 @@ typedef struct Node {
   int options[MAX_NEIGHBOURS];
   size_t optionsLength;
   const char *innerText;
+  bool isGoal;
 } Node;
 
 void LoadNodes(Node *nodes);
