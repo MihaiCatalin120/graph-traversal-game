@@ -25,8 +25,32 @@ void DrawNode(Node node, Player player) {
 }
 
 void DrawDirectionArrows(struct Node node) {
-  // WARN: Until this is implemented it will throw a warning
-  // TODO: Implement
+  for (size_t i = 0; i < node.optionsLength; i++) {
+    Vector2 start = node.position;
+    Vector2 end = nodes[node.options[i]].position;
+
+    float angle = atan2f(end.y - start.y, end.x - start.x);
+    float offset = 45.0f * DEG2RAD;
+
+    Vector2 startEdge = {
+        start.x + cosf(angle - offset) * CIRCLE_RADIUS,
+        start.y + sinf(angle - offset) * CIRCLE_RADIUS,
+    };
+
+    Vector2 endEdge = {
+        end.x + cosf(angle + PI - offset) * CIRCLE_RADIUS,
+        end.y + sinf(angle + PI - offset) * CIRCLE_RADIUS,
+    };
+
+    Vector2 points[4] = {
+        start,
+        startEdge,
+        endEdge,
+        end,
+    };
+
+    DrawSplineCatmullRom(points, 4, 2.0f, BLACK);
+  }
 }
 
 void DrawNodeHint(int nodeIndex, struct Node currentNode) {

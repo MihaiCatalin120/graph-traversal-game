@@ -86,19 +86,25 @@ void LoadLevel(int level, Node *cursor, Node *nodes) {
                             (int[]){4, 9, 19}, 3, "");
 
     for (size_t i = 0; i < 10; i++) {
-      MoveCursorAndInsertNode(cursor, nodes, 4 * CIRCLE_RADIUS, 0, (int[]){-1},
-                              2, "");
+      i != 9 ? MoveCursorAndInsertNode(cursor, nodes, 4 * CIRCLE_RADIUS, 0,
+                                       (int[]){-1}, 2, "")
+             : MoveCursorAndInsertNode(cursor, nodes, 4 * CIRCLE_RADIUS, 0,
+                                       (int[]){nodesLength - 1}, 1, "");
     }
 
     MoveCursorAndInsertNode(&levelStartCursor, nodes, 6 * CIRCLE_RADIUS,
                             4 * CIRCLE_RADIUS, (int[]){8, nodesLength + 1}, 2,
                             "");
     for (size_t i = 0; i < 10; i++) {
-      if (i == 9)
+      if (i == 9) {
         levelStartCursor.isGoal = true;
-      MoveCursorAndInsertNode(&levelStartCursor, nodes, 4 * CIRCLE_RADIUS,
-                              fmax((4.0f - i), 0.0f) * CIRCLE_RADIUS,
-                              (int[]){-1}, 2, "");
+        MoveCursorAndInsertNode(&levelStartCursor, nodes, 4 * CIRCLE_RADIUS,
+                                fmax((4.0f - i), 0.0f) * CIRCLE_RADIUS,
+                                (int[]){nodesLength - 1}, 1, "");
+      } else
+        MoveCursorAndInsertNode(&levelStartCursor, nodes, 4 * CIRCLE_RADIUS,
+                                fmax((4.0f - i), 0.0f) * CIRCLE_RADIUS,
+                                (int[]){-1}, 2, "");
     }
   } break;
   case 1: {
