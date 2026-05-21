@@ -61,7 +61,7 @@ int main() {
     UpdateCameraPosition(&camera, player.position, delta, currentNodeIndex);
     UpdateGameTitle(&gameTitlePlayer, &gameTitleCurrentNode,
                     &gameTitleCurrentNodeIndex, delta, &gameTitleCounter);
-    CheckCurrentNodeAction(&currentNode, &shouldExit);
+    CheckCurrentNodeAction(&currentNode, &currentNodeIndex, &shouldExit);
 
     BeginDrawing();
 

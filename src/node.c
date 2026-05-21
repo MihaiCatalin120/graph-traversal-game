@@ -119,13 +119,15 @@ void ChangeNode(int targetIndex, int *currentIndex, Node *currentNode) {
   *currentNode = nodes[targetIndex];
 }
 
-void CheckCurrentNodeAction(Node *currentNode, bool *shouldExit) {
+void CheckCurrentNodeAction(Node *currentNode, int *currentNodeIndex,
+                            bool *shouldExit) {
   if (strcmp(currentNode->innerText, "Exit") == 0) {
     *shouldExit = true;
   }
 
   if (currentNode->isGoal) {
     currentNode->isGoal = false;
+    nodes[*currentNodeIndex].isGoal = false;
     rini_set_value(&config, "STARTING_LEVEL",
                    rini_get_value(config, "STARTING_LEVEL") + 1,
                    STARTING_LEVEL_DESCRIPTION);

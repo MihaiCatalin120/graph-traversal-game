@@ -16,7 +16,8 @@ typedef struct Node {
 void LoadNodes(Node *nodes);
 void LoadLevel(int level, Node *cursor, Node *nodes);
 void ChangeNode(int targetIndex, int *currentIndex, Node *currentNode);
-void CheckCurrentNodeAction(Node *currentNode, bool *shouldExit);
+void CheckCurrentNodeAction(Node *currentNode, int *currentNodeIndex,
+                            bool *shouldExit);
 
 extern Node *nodes;
 extern size_t nodesLength;
