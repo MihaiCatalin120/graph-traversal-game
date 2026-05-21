@@ -2,8 +2,6 @@
 #include <stddef.h>
 #include <unistd.h>
 
-#include "config.h"
-
 #include "camera.h"
 #include "font.h"
 #include "node.h"

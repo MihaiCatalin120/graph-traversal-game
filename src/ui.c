@@ -26,15 +26,23 @@ void DrawNode(Node node, Player player) {
 
 void DrawDirectionArrows(struct Node node) {
   for (size_t i = 0; i < node.optionsLength; i++) {
+    const float ARCH_STRENGTH = 60.0f; // 0 = straight, 90 = very deep arch
+    const float ARROW_LENGTH = 12.0f;
+    const float ARROW_ANGLE = 30.0f;
+    const float LINE_THICKNESS = 2.0f;
     Vector2 start = node.position;
     Vector2 end = nodes[node.options[i]].position;
 
     float angle = atan2f(end.y - start.y, end.x - start.x);
-    float offset = 45.0f * DEG2RAD;
+    float offset = ARCH_STRENGTH * DEG2RAD;
+    Vector2 normal = {-sinf(angle), cosf(angle)};
+
+    Vector2 mid = {(start.x + end.x) * 0.5f + normal.x * ARCH_STRENGTH,
+                   (start.y + end.y) * 0.5f + normal.y * ARCH_STRENGTH};
 
     Vector2 startEdge = {
-        start.x + cosf(angle - offset) * CIRCLE_RADIUS,
-        start.y + sinf(angle - offset) * CIRCLE_RADIUS,
+        start.x + cosf(angle + offset) * CIRCLE_RADIUS,
+        start.y + sinf(angle + offset) * CIRCLE_RADIUS,
     };
 
     Vector2 endEdge = {
@@ -42,14 +50,24 @@ void DrawDirectionArrows(struct Node node) {
         end.y + sinf(angle + PI - offset) * CIRCLE_RADIUS,
     };
 
-    Vector2 points[4] = {
-        start,
-        startEdge,
-        endEdge,
-        end,
+    Vector2 points[5] = {
+        start, startEdge, mid, endEdge, end,
     };
 
-    DrawSplineCatmullRom(points, 4, 2.0f, BLACK);
+    DrawSplineCatmullRom(points, 5, 2.0f, BLACK);
+
+    float approachAngle = atan2f(end.y - mid.y, end.x - mid.x);
+
+    float wing1Angle = approachAngle + PI + (ARROW_ANGLE * DEG2RAD);
+    float wing2Angle = approachAngle + PI - (ARROW_ANGLE * DEG2RAD);
+
+    Vector2 wing1 = {endEdge.x + cosf(wing1Angle) * ARROW_LENGTH,
+                     endEdge.y + sinf(wing1Angle) * ARROW_LENGTH};
+    Vector2 wing2 = {endEdge.x + cosf(wing2Angle) * ARROW_LENGTH,
+                     endEdge.y + sinf(wing2Angle) * ARROW_LENGTH};
+
+    DrawLineEx(endEdge, wing1, LINE_THICKNESS, BLACK);
+    DrawLineEx(endEdge, wing2, LINE_THICKNESS, BLACK);
   }
 }
 
