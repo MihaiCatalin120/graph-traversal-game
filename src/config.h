@@ -11,7 +11,7 @@
 #define CIRCLE_RADIUS 40
 #define CIRCLE_BORDER 2
 #define PLAYER_RADIUS (CIRCLE_RADIUS / 2.0f)
-#define MOVE_HINT_SPACING 10
+#define MOVE_HINT_SPACING 30
 
 #define GAME_TITLE "graph-traversal"
 

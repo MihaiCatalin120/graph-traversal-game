@@ -75,12 +75,15 @@ void DrawNodeHint(int nodeIndex, struct Node currentNode) {
   int optionIndex = GetElementIndex(nodeIndex, currentNode.options,
                                     currentNode.optionsLength);
   if (optionIndex >= 0) {
-    DrawTextEx(
-        font, TextFormat("%d", optionIndex),
-        (Vector2){
-            nodes[nodeIndex].position.x - CIRCLE_RADIUS - MOVE_HINT_SPACING,
-            nodes[nodeIndex].position.y - CIRCLE_RADIUS - MOVE_HINT_SPACING},
-        32, 0, BLACK);
+    int fontSize = 32;
+    const char *text = TextFormat("%d", optionIndex);
+
+    Vector2 fontSpace = MeasureTextEx(font, text, fontSize, 0);
+    DrawTextEx(font, text,
+               (Vector2){nodes[nodeIndex].position.x - fontSpace.x / 2,
+                         nodes[nodeIndex].position.y - CIRCLE_RADIUS -
+                             MOVE_HINT_SPACING},
+               32, 0, BLACK);
   }
 }
 
