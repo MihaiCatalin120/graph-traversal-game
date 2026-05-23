@@ -69,8 +69,9 @@ int main() {
     BeginMode2D(camera);
 
     for (size_t i = 0; i < nodesLength; i++) {
-      DrawNode(nodes[i], player);
       DrawDirectionArrows(nodes[i]);
+
+      DrawNode(nodes[i], player);
       if (!player.isMoving)
         DrawNodeHint(i, currentNode);
       if (DEBUG_MODE)

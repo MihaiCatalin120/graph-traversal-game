@@ -26,7 +26,7 @@ void DrawNode(Node node, Player player) {
 
 void DrawDirectionArrows(struct Node node) {
   for (size_t i = 0; i < node.optionsLength; i++) {
-    const float ARCH_STRENGTH = 60.0f; // 0 = straight, 90 = very deep arch
+    const float ARCH_STRENGTH = -45.0f; // 0 = straight, 90 = very deep arch
     const float ARROW_LENGTH = 12.0f;
     const float ARROW_ANGLE = 30.0f;
     const float LINE_THICKNESS = 2.0f;
@@ -46,8 +46,8 @@ void DrawDirectionArrows(struct Node node) {
     };
 
     Vector2 endEdge = {
-        end.x + cosf(angle + PI - offset) * CIRCLE_RADIUS,
-        end.y + sinf(angle + PI - offset) * CIRCLE_RADIUS,
+        end.x + cosf(angle - PI - offset) * CIRCLE_RADIUS,
+        end.y + sinf(angle - PI - offset) * CIRCLE_RADIUS,
     };
 
     Vector2 points[5] = {
