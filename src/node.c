@@ -75,15 +75,19 @@ void LoadNodes(Node *nodes) {
 
   Node levelCursor = mainMenuCursor;
 
-  LoadLevel(rini_get_value(config, "STARTING_LEVEL"), &levelCursor, nodes);
+  for (size_t startingLevel = rini_get_value(config, "STARTING_LEVEL");
+       startingLevel < MAX_LEVELS; startingLevel++)
+    levelCursor = LoadLevel(startingLevel, &levelCursor, nodes);
 }
 
-void LoadLevel(int level, Node *cursor, Node *nodes) {
+Node LoadLevel(int level, Node *cursor, Node *nodes) {
+  Node levelStartCursor = *cursor;
+  Node endLevelCursor = *cursor;
+  int MAIN_MENU_END_NODE = 4;
   switch (level) {
   case 0: {
-    Node levelStartCursor = *cursor;
     MoveCursorAndInsertNode(cursor, nodes, 4 * CIRCLE_RADIUS, 0,
-                            (int[]){4, 9, 19}, 3, "");
+                            (int[]){MAIN_MENU_END_NODE, 9, 19}, 3, "");
 
     for (size_t i = 0; i < 10; i++) {
       i != 9 ? MoveCursorAndInsertNode(cursor, nodes, 4 * CIRCLE_RADIUS, 0,
@@ -98,20 +102,25 @@ void LoadLevel(int level, Node *cursor, Node *nodes) {
     for (size_t i = 0; i < 10; i++) {
       if (i == 9) {
         levelStartCursor.isGoal = true;
-        MoveCursorAndInsertNode(&levelStartCursor, nodes, 4 * CIRCLE_RADIUS,
-                                fmax((4.0f - i), 0.0f) * CIRCLE_RADIUS,
-                                (int[]){nodesLength - 1}, 1, "");
       } else
         MoveCursorAndInsertNode(&levelStartCursor, nodes, 4 * CIRCLE_RADIUS,
                                 fmax((4.0f - i), 0.0f) * CIRCLE_RADIUS,
                                 (int[]){-1}, 2, "");
     }
+
+    endLevelCursor = levelStartCursor;
   } break;
   case 1: {
-    MoveCursorAndInsertNode(cursor, nodes, 4 * CIRCLE_RADIUS, 0, (int[]){4}, 1,
-                            "");
+    int startingLevel = rini_get_value(config, "STARTING_LEVEL");
+    MoveCursorAndInsertNode(cursor, nodes, 4 * CIRCLE_RADIUS, 0,
+                            startingLevel == level ? (int[]){MAIN_MENU_END_NODE}
+                                                   : (int[]){-1},
+                            startingLevel == level ? 1 : 2, "");
+    endLevelCursor = *cursor;
   } break;
   }
+
+  return endLevelCursor;
 }
 
 void ChangeNode(int targetIndex, int *currentIndex, Node *currentNode) {

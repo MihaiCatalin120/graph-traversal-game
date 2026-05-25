@@ -17,6 +17,7 @@
 
 #define MAX_NEIGHBOURS 10
 #define MAX_NODES 100
+#define MAX_LEVELS 2
 
 #define PLAYER_MOVE_ANIMATION_DURATION .5f
 
